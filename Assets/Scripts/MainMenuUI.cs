@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenuUI : MonoBehaviour {
     [SerializeField] private RectTransform mainDisplay;
     [SerializeField] private RectTransform settingsDisplay;
     [SerializeField] private Toggle musicToggle;
@@ -13,17 +13,21 @@ public class MainMenu : MonoBehaviour {
     private bool isInteractible = true;
 
     private void Awake() {
-        Init();
+        UIInit();
+        AudioInit();
     }
 
-    private void Init() {
+    private void UIInit() {
         mainDisplay.gameObject.SetActive(true);
         settingsDisplay.gameObject.SetActive(false);
         settingsDisplay.transform.position = new(Screen.width + settingsDisplay.rect.width / 2, settingsDisplay.transform.position.y, settingsDisplay.transform.position.z);
-        musicToggle.isOn = true;
-        sfxToggle.isOn = true;
+    }
+
+    private void AudioInit() {
         audio = FindObjectOfType<Audio>();
         audio.PlayMenuTrack();
+        musicToggle.SetIsOnWithoutNotify(!audio.IsMusicMute());
+        sfxToggle.SetIsOnWithoutNotify(!audio.IsSFXMute());
     }
 
     public void StartGame() {
@@ -32,7 +36,7 @@ public class MainMenu : MonoBehaviour {
         audio.PlayUISound();
         audio.PlayGameTrack();
         BlockButtons();
-        Debug.Log("Start game");
+        SceneLoading.Instance.LoadScene("GameScene");
     }
 
     public void OpenSettings() {
@@ -64,13 +68,11 @@ public class MainMenu : MonoBehaviour {
     public void SwitchMusic() {
         audio.SetMusicMute(!musicToggle.isOn);
         audio.PlayUISound();
-        Debug.Log($"Switch music to {musicToggle.isOn}");
     }
 
     public void SwitchSFX() {
         audio.SetSFXMute(!sfxToggle.isOn);
         audio.PlayUISound();
-        Debug.Log($"Switch SFX to {sfxToggle.isOn}");
     }
 
     private void UnblockButtons() => isInteractible = true;
