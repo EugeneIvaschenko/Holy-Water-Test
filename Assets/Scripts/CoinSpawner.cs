@@ -8,7 +8,7 @@ public class CoinSpawner : MonoBehaviour {
     [SerializeField] private float coinLifetime = 5;
     [SerializeField] private float spawnHeight = 5;
 
-    private void Start() {
+    public void Init() {
         StartCoroutine(StartCoinCreatingCycle());
     }
 

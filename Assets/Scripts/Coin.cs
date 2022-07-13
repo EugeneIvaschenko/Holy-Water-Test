@@ -20,7 +20,6 @@ public class Coin : MonoBehaviour {
         if (other.CompareTag("Floor")) {
             StartCoroutine(StartDestroyDelay());
             StartCoroutine(StartRotating());
-            Debug.Log("FLOOR!");
             floorDetector.enabled = false;
             rb.useGravity = false;
             rb.isKinematic = true;
@@ -30,7 +29,6 @@ public class Coin : MonoBehaviour {
     private IEnumerator StartDestroyDelay() {
         yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
-        Debug.Log("CoinDestroyed");
     }
 
     private IEnumerator StartRotating() {
