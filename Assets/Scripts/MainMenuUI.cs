@@ -34,7 +34,6 @@ public class MainMenuUI : MonoBehaviour {
         if (!isInteractible)
             return;
         audio.PlayUISound();
-        audio.PlayGameTrack();
         BlockButtons();
         SceneLoading.Instance.LoadScene("GameScene");
     }

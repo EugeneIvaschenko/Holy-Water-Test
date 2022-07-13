@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameUI : MonoBehaviour {
     private new Audio audio;
     private bool isLoadingScene = false;
+    [SerializeField] private Material skybox;
 
     private void Awake() {
         Init();
@@ -11,6 +12,7 @@ public class GameUI : MonoBehaviour {
     private void Init() {
         audio = FindObjectOfType<Audio>();
         audio.PlayGameTrack();
+        RenderSettings.skybox = skybox;
     }
 
     public void BackToMainMenu() {
